@@ -1,0 +1,41 @@
+{
+  "name": "mock-ad-data-api",
+  "version": "1.0.0",
+  "description": "Mock Google Ads reporting data API for demo integrations",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "test": "vitest",
+    "test:coverage": "vitest --coverage",
+    "lint": "eslint src/",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "google-ads",
+    "mock-api",
+    "advertising",
+    "demo"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@faker-js/faker": "^9.0.0",
+    "cors": "^2.8.5",
+    "date-fns": "^4.1.0",
+    "express": "^4.21.0",
+    "helmet": "^8.0.0",
+    "seedrandom": "^3.0.5",
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.0.0",
+    "@types/seedrandom": "^3.0.8",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0",
+    "vitest": "^2.1.0"
+  }
+}
