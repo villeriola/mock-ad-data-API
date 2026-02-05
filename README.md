@@ -35,26 +35,28 @@ The server runs on `http://localhost:3000` by default.
 GET /api/v1/health
 ```
 
-### List Accounts
+### Google Ads Endpoints
+
+#### List Accounts
 ```
-GET /api/v1/accounts
+GET /api/v1/gads/accounts
 ```
 
 Returns all available mock accounts.
 
-### Get Account Details
+#### Get Account Details
 ```
-GET /api/v1/accounts/:id
-```
-
-### List Campaigns
-```
-GET /api/v1/accounts/:id/campaigns
+GET /api/v1/gads/accounts/:id
 ```
 
-### Generate Report
+#### List Campaigns
 ```
-POST /api/v1/reports
+GET /api/v1/gads/accounts/:id/campaigns
+```
+
+#### Generate Report
+```
+POST /api/v1/gads/reports
 ```
 
 The main endpoint for generating advertising performance data.
