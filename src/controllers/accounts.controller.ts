@@ -9,7 +9,7 @@ interface AccountParams {
 
 export const listAccounts: RequestHandler = (_req, res) => {
   const accounts = getAllAccounts().map(({ industry, ...account }) => account);
-  res.json({ accounts });
+  res.json({ authentication: res.locals.authStatus, accounts });
 };
 
 export const getAccount: RequestHandler<AccountParams> = (req, res, next) => {
@@ -21,7 +21,7 @@ export const getAccount: RequestHandler<AccountParams> = (req, res, next) => {
   }
 
   const { industry, ...accountData } = account;
-  res.json(accountData);
+  res.json({ authentication: res.locals.authStatus, ...accountData });
 };
 
 export const listCampaigns: RequestHandler<AccountParams> = (req, res, next) => {
@@ -33,5 +33,5 @@ export const listCampaigns: RequestHandler<AccountParams> = (req, res, next) => 
   }
 
   const campaigns = getCampaignsForAccount(id);
-  res.json({ campaigns });
+  res.json({ authentication: res.locals.authStatus, campaigns });
 };

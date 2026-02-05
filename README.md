@@ -35,6 +35,23 @@ The server runs on `http://localhost:3000` by default.
 GET /api/v1/health
 ```
 
+### Authentication
+
+All `/gads` endpoints support mock authentication via the `x-api-key` header. This simulates the authentication flow of a real API integration.
+
+- **With header**: Response includes `"authentication": { "authenticated": true, ... }`
+- **Without header**: Data is still returned, but response includes `"authentication": { "authenticated": false, ... }`
+
+```bash
+# Authenticated request
+curl -H "x-api-key: any-string-works" http://localhost:3000/api/v1/gads/accounts
+
+# Unauthenticated request (data still returned)
+curl http://localhost:3000/api/v1/gads/accounts
+```
+
+The key can be any non-empty string. This allows demo integrations to test their authentication flow without needing real credentials.
+
 ### Google Ads Endpoints
 
 #### List Accounts
@@ -119,6 +136,10 @@ The main endpoint for generating advertising performance data.
 
 ```json
 {
+  "authentication": {
+    "authenticated": true,
+    "message": "Authenticated successfully"
+  },
   "metadata": {
     "accountId": "123-456-7890",
     "accountName": "Acme E-Commerce Store",

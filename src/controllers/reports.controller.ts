@@ -6,7 +6,7 @@ export const createReport: RequestHandler = async (req, res, next) => {
   try {
     const request = req.body as ValidatedReportRequest;
     const report = await generateReport(request);
-    res.json(report);
+    res.json({ authentication: res.locals.authStatus, ...report });
   } catch (error) {
     next(error);
   }
