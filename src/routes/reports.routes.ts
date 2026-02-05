@@ -1,10 +1,8 @@
 import { Router } from 'express';
-import { createReport } from '../controllers/reports.controller.js';
-import { validateBody } from '../middleware/validate-request.js';
-import { reportRequestSchema } from '../schemas/report-request.schema.js';
+import { getReport } from '../controllers/reports.controller.js';
 
 const router = Router();
 
-router.post('/reports', validateBody(reportRequestSchema), createReport);
+router.get('/:accountId/reports', getReport);
 
 export default router;

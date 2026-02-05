@@ -45,7 +45,7 @@ export async function generateReport(request: ValidatedReportRequest): Promise<R
   const metrics = request.metrics || [...ALL_METRIC_NAMES];
 
   // Expand date range
-  const dates = expandDateRange(request.dateRange.startDate, request.dateRange.endDate);
+  const dates = expandDateRange(request.startDate, request.endDate);
 
   // Generate raw data at the finest granularity
   const rawData: RawDataPoint[] = [];
@@ -53,15 +53,15 @@ export async function generateReport(request: ValidatedReportRequest): Promise<R
   for (const date of dates) {
     for (const campaign of campaigns) {
       // Apply campaign filters
-      if (request.filters?.campaignIds && !request.filters.campaignIds.includes(campaign.id)) {
+      if (request.campaignIds && !request.campaignIds.includes(campaign.id)) {
         continue;
       }
-      if (request.filters?.campaignStatus && campaign.status !== request.filters.campaignStatus) {
+      if (request.campaignStatus && campaign.status !== request.campaignStatus) {
         continue;
       }
 
       // Skip removed campaigns unless explicitly filtered
-      if (campaign.status === 'REMOVED' && !request.filters?.campaignStatus) {
+      if (campaign.status === 'REMOVED' && !request.campaignStatus) {
         continue;
       }
 
@@ -69,15 +69,15 @@ export async function generateReport(request: ValidatedReportRequest): Promise<R
 
       for (const adGroup of campaignAdGroups) {
         // Apply ad group filters
-        if (request.filters?.adGroupIds && !request.filters.adGroupIds.includes(adGroup.id)) {
+        if (request.adGroupIds && !request.adGroupIds.includes(adGroup.id)) {
           continue;
         }
-        if (request.filters?.adGroupStatus && adGroup.status !== request.filters.adGroupStatus) {
+        if (request.adGroupStatus && adGroup.status !== request.adGroupStatus) {
           continue;
         }
 
         // Skip removed ad groups unless explicitly filtered
-        if (adGroup.status === 'REMOVED' && !request.filters?.adGroupStatus) {
+        if (adGroup.status === 'REMOVED' && !request.adGroupStatus) {
           continue;
         }
 
@@ -142,7 +142,8 @@ export async function generateReport(request: ValidatedReportRequest): Promise<R
 
   // Apply sorting
   if (request.orderBy) {
-    const { field, direction } = request.orderBy;
+    const field = request.orderBy;
+    const direction = request.orderDirection || 'DESC';
     rows.sort((a, b) => {
       const aVal = (a.metrics as Record<string, number>)[field] || 0;
       const bVal = (b.metrics as Record<string, number>)[field] || 0;
@@ -161,7 +162,10 @@ export async function generateReport(request: ValidatedReportRequest): Promise<R
     metadata: {
       accountId: account.id,
       accountName: account.name,
-      dateRange: request.dateRange,
+      dateRange: {
+        startDate: request.startDate,
+        endDate: request.endDate,
+      },
       dimensions,
       metrics,
       totalRows: rows.length,
