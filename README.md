@@ -10,7 +10,7 @@ A mock Google Ads reporting data API for demo integrations. This service generat
 - **Flexible querying**: Select date ranges, dimensions, and metrics
 - **5 pre-configured demo accounts**: E-commerce, SaaS, Local Services, Travel, Finance
 
-## Quick Start
+## Quick Start for local setup
 
 ```bash
 # Install dependencies
@@ -27,6 +27,9 @@ npm start
 ```
 
 The server runs on `http://localhost:3000` by default.
+
+## Production example
+If you want to call the API from external systems, like SM Connector Builder, you can use the version running on clod servers on `https://mock-ad-data-api-production.up.railway.app`
 
 ## API Endpoints
 
