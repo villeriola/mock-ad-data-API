@@ -5,6 +5,7 @@ import healthRoutes from './routes/health.routes.js';
 import reportsRoutes from './routes/reports.routes.js';
 import accountsRoutes from './routes/accounts.routes.js';
 import { errorHandler } from './middleware/error-handler.js';
+import { mockAuth } from './middleware/mock-auth.js';
 
 const app = express();
 
@@ -17,8 +18,8 @@ app.use(express.json());
 
 // Routes
 app.use('/api/v1', healthRoutes);
-app.use('/api/v1/gads', reportsRoutes);
-app.use('/api/v1/gads', accountsRoutes);
+app.use('/api/v1/gads', mockAuth, reportsRoutes);
+app.use('/api/v1/gads', mockAuth, accountsRoutes);
 
 // Error handling
 app.use(errorHandler);
