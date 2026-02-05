@@ -17,8 +17,8 @@ app.use(express.json());
 
 // Routes
 app.use('/api/v1', healthRoutes);
-app.use('/api/v1', reportsRoutes);
-app.use('/api/v1', accountsRoutes);
+app.use('/api/v1/gads', reportsRoutes);
+app.use('/api/v1/gads', accountsRoutes);
 
 // Error handling
 app.use(errorHandler);
