@@ -73,38 +73,33 @@ GET /api/v1/gads/accounts/:id/campaigns
 
 #### Generate Report
 ```
-POST /api/v1/gads/reports
+GET /api/v1/gads/:accountId/reports
 ```
 
-The main endpoint for generating advertising performance data.
+The main endpoint for generating advertising performance data. The account ID is part of the URL path, and all other parameters are passed as query parameters.
 
-#### Request Body
+#### Example Request
 
-```json
-{
-  "accountId": "123-456-7890",
-  "dateRange": {
-    "startDate": "2024-01-01",
-    "endDate": "2024-01-07"
-  },
-  "dimensions": ["date", "campaign", "device"],
-  "metrics": ["impressions", "clicks", "cost", "ctr", "cpc"]
-}
+```bash
+curl "http://localhost:3000/api/v1/gads/123-456-7890/reports?startDate=2024-01-01&endDate=2024-01-07&dimensions=date,campaign,device&metrics=impressions,clicks,cost,ctr,cpc"
 ```
 
-#### Parameters
+#### Query Parameters
 
-| Field | Type | Required | Description |
-|-------|------|----------|-------------|
-| `accountId` | string | Yes | Account ID in format `XXX-XXX-XXXX` |
-| `dateRange.startDate` | string | Yes | Start date (YYYY-MM-DD) |
-| `dateRange.endDate` | string | Yes | End date (YYYY-MM-DD) |
-| `dimensions` | array | No | Grouping dimensions (see below) |
-| `metrics` | array | No | Metrics to return (defaults to all) |
-| `filters` | object | No | Filter criteria |
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `startDate` | string | Yes | Start date (YYYY-MM-DD) |
+| `endDate` | string | Yes | End date (YYYY-MM-DD) |
+| `dimensions` | string | No | Comma-separated dimensions (see below) |
+| `metrics` | string | No | Comma-separated metrics (defaults to all) |
 | `pageSize` | number | No | Results per page (default: 1000, max: 10000) |
 | `pageToken` | string | No | Pagination token |
-| `orderBy` | object | No | Sort configuration |
+| `orderBy` | string | No | Metric name to sort by |
+| `orderDirection` | string | No | `ASC` or `DESC` (default: `DESC`) |
+| `campaignIds` | string | No | Comma-separated campaign IDs to filter |
+| `adGroupIds` | string | No | Comma-separated ad group IDs to filter |
+| `campaignStatus` | string | No | Filter by campaign status: `ENABLED`, `PAUSED`, `REMOVED` |
+| `adGroupStatus` | string | No | Filter by ad group status: `ENABLED`, `PAUSED`, `REMOVED` |
 
 #### Available Dimensions
 
